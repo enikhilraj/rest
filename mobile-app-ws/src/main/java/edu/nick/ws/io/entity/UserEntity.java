@@ -1,13 +1,11 @@
 package edu.nick.ws.io.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.io.Serializable;
 
 @Entity(name = "users")
+//@Table(uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class UserEntity implements Serializable {
     private static final long serialVersionUID = -8129955434383788910L;
     @Id
@@ -19,7 +17,7 @@ public class UserEntity implements Serializable {
     private String firstName;
     @Column(nullable = false, length = 50)
     private String lastName;
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, length = 120, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
