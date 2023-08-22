@@ -1,9 +1,9 @@
 package edu.nick.ws.io.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ public class UserEntity implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String userId;
     @Column(nullable = false, length = 50)
     private String firstName;
@@ -24,7 +24,7 @@ public class UserEntity implements Serializable {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private String encryptedPassword;
+    private String encryptedPassword = "encryptedPassword";
     private String emailVerificationToken;
     @Column(nullable = false)
     private Boolean emailVerificationStatus = false;

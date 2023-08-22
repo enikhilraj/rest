@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class UserDto implements Serializable {
     private static final long serialVersionUID = -8129955434383788910L;
     private long id;
-    private String userId;
+    private String userId = "userId1";
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private String encryptedPassword;
+    private String encryptedPassword = "encryptedPassword";
     private String emailVerificationToken;
     private Boolean emailVerificationStatus = false;
 
