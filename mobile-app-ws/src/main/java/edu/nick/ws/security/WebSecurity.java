@@ -10,10 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static edu.nick.ws.security.SecurityConstants.SIGN_UP_URL;
+
 @EnableWebSecurity
 public class WebSecurity {
-    private UserService userDetailsService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserService userDetailsService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
@@ -37,7 +39,7 @@ public class WebSecurity {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users")
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL)
                 .permitAll()
                 .anyRequest()
                 .authenticated();
