@@ -7,6 +7,7 @@ import edu.nick.ws.shared.Utils;
 import edu.nick.ws.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,14 +29,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto user) {
 
-        if(userRepository.findByEmail(user.getEmail()) != null) throw new RuntimeException("User record already exists!");
+        if(userRepository.findByEmail(user.getEmail()) != null)
+            throw new RuntimeException("User record already exists!");
 
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user,  userEntity);
 
-        //userEntity.setEncryptedPassword("encryptedPassword");
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        //userEntity.setUserId("userId");
 
         String publicUserId = utils.generateUserId(30);
         userEntity.setUserId(publicUserId);
@@ -51,10 +51,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByEmail(username);
-        if(userEntity != null)
+        if(null == userEntity)
             throw new UsernameNotFoundException(username);
 
-        return new org.springframework.security.core.userdetails.User(username,
-                userEntity.getEncryptedPassword(), new ArrayList<>());
+        return new User(username, userEntity.getEncryptedPassword(), new ArrayList<>());
     }
 }

@@ -42,7 +42,10 @@ public class WebSecurity {
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL)
                 .permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .authenticationManager(authenticationManager)
+                .addFilter(new AuthenticationFilter(authenticationManager));
 
         return httpSecurity.build();
     }
