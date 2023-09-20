@@ -47,7 +47,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) throws IOException,
             ServletException {
-        //byte[] secretKeyBytes = Base64.getEncoder().encode(SecurityConstants.TOKEN_SECRET.getBytes());
         SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
         Instant now = Instant.now();
 
